@@ -1,4 +1,4 @@
-package player;
+package fr.cleanarchitecture.esportsclash.player;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,9 +2,6 @@ package fr.cleanarchitecture.esportsclash.player;
 
 import org.junit.Assert;
 import org.junit.Test;
-import player.CreatePlayerUseCase;
-import player.Player;
-import player.PlayerRepository;
 
 public class CreatePlayerTests {
 

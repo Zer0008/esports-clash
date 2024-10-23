@@ -1,4 +1,4 @@
-package player;
+package fr.cleanarchitecture.esportsclash.player;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package player;
+package fr.cleanarchitecture.esportsclash.player;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

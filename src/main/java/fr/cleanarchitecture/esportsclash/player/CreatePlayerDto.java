@@ -1,4 +1,4 @@
-package player;
+package fr.cleanarchitecture.esportsclash.player;
 
 public class CreatePlayerDto {
     private String name;

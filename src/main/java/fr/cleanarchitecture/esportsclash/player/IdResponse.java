@@ -1,7 +1,9 @@
-package player;
+package fr.cleanarchitecture.esportsclash.player;
 
 public class IdResponse {
     private String id;
+
+    public IdResponse() {}
 
     public IdResponse(String id) {
         this.id = id;

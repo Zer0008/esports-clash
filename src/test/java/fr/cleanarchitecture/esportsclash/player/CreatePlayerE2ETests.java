@@ -14,10 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import player.CreatePlayerDto;
-import player.IdResponse;
-import player.PlayerConfiguration;
-import player.PlayerRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,7 +31,7 @@ public class CreatePlayerE2ETests {
 
     @Test
     public void shouldCreatePlayer() throws Exception {
-        var dto = new CreatePlayerDto("player");
+        var dto = new CreatePlayerDto("fr/cleanarchitecture/esportsclash/player");
 
         var result = mockMvc
                 .perform(MockMvcRequestBuilders.post("/players")
