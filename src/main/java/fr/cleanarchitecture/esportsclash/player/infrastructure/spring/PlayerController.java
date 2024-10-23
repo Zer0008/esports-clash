@@ -1,5 +1,7 @@
-package fr.cleanarchitecture.esportsclash.player;
+package fr.cleanarchitecture.esportsclash.player.infrastructure.spring;
 
+import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
+import fr.cleanarchitecture.esportsclash.player.application.usecases.CreatePlayerUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

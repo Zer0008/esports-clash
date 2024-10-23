@@ -1,4 +1,4 @@
-package fr.cleanarchitecture.esportsclash.player;
+package fr.cleanarchitecture.esportsclash.player.infrastructure.spring;
 
 public class CreatePlayerDto {
     private String name;

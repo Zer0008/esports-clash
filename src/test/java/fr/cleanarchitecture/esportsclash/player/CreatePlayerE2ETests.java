@@ -1,6 +1,10 @@
 package fr.cleanarchitecture.esportsclash.player;
 
 import fr.cleanarchitecture.esportsclash.PostgreSQLTestConfiguration;
+import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
+import fr.cleanarchitecture.esportsclash.player.application.ports.PlayerRepository;
+import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.CreatePlayerDto;
+import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.PlayerConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +31,7 @@ public class CreatePlayerE2ETests {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerRepository inMemoryPlayerRepository;
 
     @Test
     public void shouldCreatePlayer() throws Exception {
@@ -44,7 +48,7 @@ public class CreatePlayerE2ETests {
                 result.getResponse().getContentAsString(),
                 IdResponse.class);
 
-        var player = playerRepository.find(idResponse.getId());
+        var player = inMemoryPlayerRepository.findById(idResponse.getId());
 
         Assert.assertNotNull(player);
         Assert.assertEquals(dto.getName(), player.getName());
