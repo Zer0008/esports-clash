@@ -10,9 +10,9 @@ public class CreatePlayerUseCase {
         this.playerRepository = playerRepository;
     }
 
-    public String execute(String name) {
+    public IdResponse execute(String name) {
         var player = new Player(UUID.randomUUID().toString(), name);
         playerRepository.save(player);
-        return player.getId();
+        return new IdResponse(player.getId());
     }
 }

@@ -7,12 +7,13 @@ import player.Player;
 import player.PlayerRepository;
 
 public class CreatePlayerTests {
+
     @Test
-    public void testCreatePlayer() {
+    public void shouldCreatePlayer() {
         var playerRepository = new PlayerRepository();
         var useCase = new CreatePlayerUseCase(playerRepository);
-        var id = useCase.execute("name");
-        var expectedPlayer = new Player(id, "name");
+        var response = useCase.execute("name");
+        var expectedPlayer = new Player(response.getId(), "name");
         Player actualPlayer = playerRepository.find(expectedPlayer.getId());
         Assert.assertEquals(expectedPlayer.getName(), actualPlayer.getName());
     }
