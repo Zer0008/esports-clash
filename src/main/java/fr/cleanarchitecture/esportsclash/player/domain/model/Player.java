@@ -1,4 +1,4 @@
-package fr.cleanarchitecture.esportsclash.player;
+package fr.cleanarchitecture.esportsclash.domain.model;
 
 public class Player {
     private String id;

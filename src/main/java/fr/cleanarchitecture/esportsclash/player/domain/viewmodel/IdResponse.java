@@ -1,4 +1,4 @@
-package fr.cleanarchitecture.esportsclash.player;
+package fr.cleanarchitecture.esportsclash.domain.viewmodel;
 
 public class IdResponse {
     private String id;
