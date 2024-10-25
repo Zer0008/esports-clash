@@ -3,12 +3,10 @@ package fr.cleanarchitecture.esportsclash.player.infrastructure.spring;
 import an.awesome.pipelinr.Pipeline;
 import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.CreatePlayerCommand;
+import fr.cleanarchitecture.esportsclash.player.application.usecases.RenamePlayerCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("players")
@@ -24,5 +22,11 @@ public class PlayerController {
     public ResponseEntity<IdResponse> createPlayer(@RequestBody CreatePlayerDto createPlayerDto) {
         var result = this.pipeline.send(new CreatePlayerCommand(createPlayerDto.getName()));
         return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<Void> chamgeNamePlayer(@RequestBody RenamePlayerDto renamePlayerDto, @PathVariable String id) {
+        this.pipeline.send(new RenamePlayerCommand(id, renamePlayerDto.getName()));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

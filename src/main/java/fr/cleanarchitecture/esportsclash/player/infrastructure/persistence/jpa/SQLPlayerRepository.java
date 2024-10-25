@@ -1,7 +1,10 @@
 package fr.cleanarchitecture.esportsclash.player.infrastructure.persistence.jpa;
 
-import fr.cleanarchitecture.esportsclash.domain.model.Player;
+import fr.cleanarchitecture.esportsclash.core.domain.exceptions.NotFoundException;
 import fr.cleanarchitecture.esportsclash.player.application.ports.PlayerRepository;
+import fr.cleanarchitecture.esportsclash.player.domain.model.Player;
+
+import java.util.Optional;
 
 public class SQLPlayerRepository implements PlayerRepository {
     private final SQLPlayerDataAccessor dataAccessor;
@@ -11,19 +14,19 @@ public class SQLPlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public Player findById(String id) {
+    public Optional<Player> findById(String id) {
         var playerQuery = dataAccessor.findById(id);
 
         if (playerQuery.isEmpty()) {
-            return null;
+            throw new NotFoundException("Player not found");
         }
 
         var sqlPlayer = playerQuery.get();
 
-        return new Player(
+        return Optional.of(new Player(
                 sqlPlayer.getId(),
                 sqlPlayer.getName()
-            );
+            ));
     }
 
     @Override
