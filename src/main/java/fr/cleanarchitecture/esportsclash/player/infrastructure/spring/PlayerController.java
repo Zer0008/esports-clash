@@ -4,7 +4,9 @@ import an.awesome.pipelinr.Pipeline;
 import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.CreatePlayerCommand;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.DeletePlayerCommand;
+import fr.cleanarchitecture.esportsclash.player.application.usecases.GetPlayerByIdCommand;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.RenamePlayerCommand;
+import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.PlayerViewModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +37,11 @@ public class PlayerController {
     public ResponseEntity<Void> chamgeNamePlayer(@PathVariable("id") String id) {
         this.pipeline.send(new DeletePlayerCommand(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PlayerViewModel> getPlayerById(@PathVariable("id") String id) {
+        var player = this.pipeline.send(new GetPlayerByIdCommand(id));
+        return ResponseEntity.ok(player);
     }
 }
