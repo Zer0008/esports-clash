@@ -4,21 +4,20 @@ import an.awesome.pipelinr.Command;
 import fr.cleanarchitecture.esportsclash.core.domain.exceptions.NotFoundException;
 import fr.cleanarchitecture.esportsclash.player.application.ports.PlayerRepository;
 
-public class RenamePlayerCommandHandler implements Command.Handler<RenamePlayerCommand, Void> {
+public class DeletePlayerCommandHandler implements Command.Handler<DeletePlayerCommand, Void> {
 
     private final PlayerRepository playerRepository;
 
-    public RenamePlayerCommandHandler(PlayerRepository playerRepository) {
+    public DeletePlayerCommandHandler(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
 
     @Override
-    public Void handle(RenamePlayerCommand command) {
-        var player = playerRepository.findById(command.getId()).orElseThrow(
+    public Void handle(DeletePlayerCommand deletePlayerCommand) {
+        var playerToDelete = playerRepository.findById(deletePlayerCommand.getId()).orElseThrow(
                 () -> new NotFoundException("Player not found")
         );
-        player.renamePlayer(command.getName());
-        playerRepository.savePlayer(player);
+        playerRepository.deletePlayer(playerToDelete);
         return null;
     }
 }

@@ -4,7 +4,6 @@ import fr.cleanarchitecture.esportsclash.PostgreSQLTestConfiguration;
 import fr.cleanarchitecture.esportsclash.player.application.ports.PlayerRepository;
 import fr.cleanarchitecture.esportsclash.player.domain.model.Player;
 import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.PlayerConfiguration;
-import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.RenamePlayerDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,7 +21,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 @Import({PostgreSQLTestConfiguration.class, PlayerConfiguration.class})
-public class RenamePlayerE2ETests {
+public class DeletePlayerE2ETests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,29 +32,21 @@ public class RenamePlayerE2ETests {
     private PlayerRepository playerRepository;
 
     @Test
-    public void shouldRenamePlayer() throws Exception {
-        var dto = new RenamePlayerDto("playerRenamed");
+    public void shouldDeletePlayer() throws Exception {
         var existingPlayer = new Player("123", "player");
         playerRepository.savePlayer(existingPlayer);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/players/123/name")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/players/123"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        var player = playerRepository.findById(existingPlayer.getId()).get();
+        var player = playerRepository.findById(existingPlayer.getId());
 
-        Assert.assertNotNull(player);
-        Assert.assertEquals(dto.getName(), player.getName());
+        Assert.assertTrue(player.isEmpty());
     }
 
     @Test
     public void whenPlayerDoesNotExist_shouldFail() throws Exception {
-        var dto = new RenamePlayerDto("playerRenamed");
-
-        mockMvc.perform(MockMvcRequestBuilders.patch("/players/garbage/name")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/players/garbage"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

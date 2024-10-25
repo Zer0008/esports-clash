@@ -8,5 +8,7 @@ public interface PlayerRepository {
 
     Optional<Player> findById(String id);
 
-    void save(Player player);
+    void savePlayer(Player player);
+
+    void deletePlayer(Player player);
 }
