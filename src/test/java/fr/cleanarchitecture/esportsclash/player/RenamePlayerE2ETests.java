@@ -1,10 +1,10 @@
 package fr.cleanarchitecture.esportsclash.player;
 
 import fr.cleanarchitecture.esportsclash.PostgreSQLTestConfiguration;
-import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.application.ports.PlayerRepository;
-import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.CreatePlayerDto;
+import fr.cleanarchitecture.esportsclash.player.domain.model.Player;
 import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.PlayerConfiguration;
+import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.RenamePlayerDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 @Import({PostgreSQLTestConfiguration.class, PlayerConfiguration.class})
-public class CreatePlayerE2ETests {
+public class RenamePlayerE2ETests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,26 +31,32 @@ public class CreatePlayerE2ETests {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private PlayerRepository inMemoryPlayerRepository;
+    private PlayerRepository playerRepository;
 
     @Test
-    public void shouldCreatePlayer() throws Exception {
-        var dto = new CreatePlayerDto("fr/cleanarchitecture/esportsclash/player");
+    public void shouldRenamePlayer() throws Exception {
+        var dto = new RenamePlayerDto("playerRenamed");
+        var existingPlayer = new Player("123", "player");
+        playerRepository.savePlayer(existingPlayer);
 
-        var result = mockMvc
-                .perform(MockMvcRequestBuilders.post("/players")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/players/123/name")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andReturn();
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-        var idResponse = objectMapper.readValue(
-                result.getResponse().getContentAsString(),
-                IdResponse.class);
-
-        var player = inMemoryPlayerRepository.findById(idResponse.getId()).get();
+        var player = playerRepository.findById(existingPlayer.getId()).get();
 
         Assert.assertNotNull(player);
         Assert.assertEquals(dto.getName(), player.getName());
+    }
+
+    @Test
+    public void whenPlayerDoesNotExist_shouldFail() throws Exception {
+        var dto = new RenamePlayerDto("playerRenamed");
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/players/garbage/name")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

@@ -1,10 +1,14 @@
 package fr.cleanarchitecture.esportsclash.player.application.ports;
 
-import fr.cleanarchitecture.esportsclash.domain.model.Player;
+import fr.cleanarchitecture.esportsclash.player.domain.model.Player;
+
+import java.util.Optional;
 
 public interface PlayerRepository {
 
-    Player findById(String id);
+    Optional<Player> findById(String id);
 
-    void save(fr.cleanarchitecture.esportsclash.domain.model.Player player);
+    void savePlayer(Player player);
+
+    void deletePlayer(Player player);
 }

@@ -1,4 +1,4 @@
-package fr.cleanarchitecture.esportsclash.domain.model;
+package fr.cleanarchitecture.esportsclash.player.domain.model;
 
 public class Player {
     private String id;
@@ -15,5 +15,9 @@ public class Player {
 
     public String getId() {
         return id;
+    }
+
+    public void renamePlayer(String newName) {
+        this.name = newName;
     }
 }
