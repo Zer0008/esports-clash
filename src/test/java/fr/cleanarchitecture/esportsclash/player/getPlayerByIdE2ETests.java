@@ -37,7 +37,7 @@ public class getPlayerByIdE2ETests {
     @Test
     public void shouldGetPlayerById() throws Exception {
         var player = new Player("123", "player");
-        playerRepository.savePlayer(player);
+        playerRepository.save(player);
 
         var result = mockMvc
                 .perform(MockMvcRequestBuilders.get("/players/{id}", player.getId()))

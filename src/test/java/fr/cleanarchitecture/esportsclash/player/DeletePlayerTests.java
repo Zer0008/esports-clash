@@ -14,7 +14,7 @@ public class DeletePlayerTests {
     public void shouldDeletePlayer() {
         var playerRepository = new InMemoryPlayerRepository();
         var player = new Player("123", "old name");
-        playerRepository.savePlayer(player);
+        playerRepository.save(player);
 
         var deletePlayerCommand = new DeletePlayerCommand(player.getId());
         var deletePlayerCommandHandler = new DeletePlayerCommandHandler(playerRepository);

@@ -20,7 +20,7 @@ public class SQLPlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public void savePlayer(Player player) {
+    public void save(Player player) {
         var sqlPlayer = new SQLPlayer(
                 player.getId(), player.getName());
 
@@ -28,7 +28,7 @@ public class SQLPlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public void deletePlayer(Player player) {
+    public void delete(Player player) {
         var SQLPlayer = new SQLPlayer(
                 player.getId(), player.getName()
         );

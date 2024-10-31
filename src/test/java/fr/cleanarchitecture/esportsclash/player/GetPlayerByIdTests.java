@@ -14,7 +14,7 @@ public class GetPlayerByIdTests {
     public void shouldGetPlayerById() {
         var playerRepository = new InMemoryPlayerRepository();
         var player = new Player("123", "player");
-        playerRepository.savePlayer(player);
+        playerRepository.save(player);
         var useCase = new GetPlayerByIdCommandHandler(playerRepository);
         var command = new GetPlayerByIdCommand("123");
 

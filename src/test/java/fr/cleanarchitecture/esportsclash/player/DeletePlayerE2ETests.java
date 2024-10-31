@@ -34,7 +34,7 @@ public class DeletePlayerE2ETests {
     @Test
     public void shouldDeletePlayer() throws Exception {
         var existingPlayer = new Player("123", "player");
-        playerRepository.savePlayer(existingPlayer);
+        playerRepository.save(existingPlayer);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/players/123"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());

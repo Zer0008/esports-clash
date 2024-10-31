@@ -37,7 +37,7 @@ public class RenamePlayerE2ETests {
     public void shouldRenamePlayer() throws Exception {
         var dto = new RenamePlayerDto("playerRenamed");
         var existingPlayer = new Player("123", "player");
-        playerRepository.savePlayer(existingPlayer);
+        playerRepository.save(existingPlayer);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/players/123/name")
                         .contentType(MediaType.APPLICATION_JSON)

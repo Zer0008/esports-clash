@@ -18,7 +18,7 @@ public class RenamePlayerCommandHandler implements Command.Handler<RenamePlayerC
                 () -> new NotFoundException("Player not found")
         );
         player.renamePlayer(command.getName());
-        playerRepository.savePlayer(player);
+        playerRepository.save(player);
         return null;
     }
 }
