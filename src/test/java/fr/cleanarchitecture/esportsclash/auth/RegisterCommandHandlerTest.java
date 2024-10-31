@@ -4,9 +4,11 @@ import fr.cleanarchitecture.esportsclash.auth.application.services.passwordhashe
 import fr.cleanarchitecture.esportsclash.auth.application.services.passwordhasher.PasswordHasher;
 import fr.cleanarchitecture.esportsclash.auth.application.usecases.RegisterUserCommandHandler;
 import fr.cleanarchitecture.esportsclash.auth.application.usecases.ResgiterUserCommand;
+import fr.cleanarchitecture.esportsclash.auth.domain.model.User;
 import fr.cleanarchitecture.esportsclash.auth.infrastructure.persistence.inmemory.InMemoryUserRepository;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 public class RegisterCommandHandlerTest {
 
@@ -15,6 +17,11 @@ public class RegisterCommandHandlerTest {
 
     private RegisterUserCommandHandler createRegisterHandler() {
         return new RegisterUserCommandHandler(userRepository, passwordHasher);
+    }
+
+    @BeforeEach
+    public void setUp() {
+        userRepository.clear();
     }
 
     @Test
@@ -27,5 +34,20 @@ public class RegisterCommandHandlerTest {
 
         Assert.assertEquals(command.getUserEmail(), actualUser.getUserEmailAddress());
         Assert.assertTrue(passwordHasher.match(command.getPassword(), actualUser.getPassword()));
+    }
+
+    @Test
+    public void whenEmailAddressIsInUse_shouldThrowException() {
+        var existingUser = new User("contact@cleanarchitecture.fr", "mot2passe");
+        userRepository.save(existingUser);
+
+        var command = new ResgiterUserCommand(existingUser.getUserEmailAddress(), "mot2passe");
+        var commandHandler = createRegisterHandler();
+
+        Assert.assertThrows(
+                "Email address already in use",
+                IllegalArgumentException.class,
+                () -> commandHandler.handle(command)
+        );
     }
 }

@@ -18,9 +18,15 @@ public class RegisterUserCommandHandler implements Command.Handler<ResgiterUserC
 
     @Override
     public IdResponse handle(ResgiterUserCommand resgiterUserCommand) {
+        var userEmailAddressAlreadyInUse = userRepository.emailAddressAvailable(resgiterUserCommand.getUserEmail());
+        if (!userEmailAddressAlreadyInUse) {
+            throw new IllegalArgumentException("Email address already in use");
+        }
+
         var user = new User(
                 resgiterUserCommand.getUserEmail(),
                 passwordHasher.hash(resgiterUserCommand.getPassword()));
+
         userRepository.save(user);
         return new IdResponse(user.getId());
     }

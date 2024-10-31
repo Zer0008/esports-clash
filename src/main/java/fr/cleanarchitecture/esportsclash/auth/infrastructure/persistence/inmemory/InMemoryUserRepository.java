@@ -5,4 +5,11 @@ import fr.cleanarchitecture.esportsclash.auth.domain.model.User;
 import fr.cleanarchitecture.esportsclash.core.infrastructure.persistence.inmemory.InMemoryBaseRepository;
 
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
+
+    @Override
+    public boolean emailAddressAvailable(String userEmailAddress) {
+        return entities.values()
+                .stream()
+                .noneMatch(user -> user.getUserEmailAddress().equals(userEmailAddress));
+    }
 }

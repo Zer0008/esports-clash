@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class InMemoryBaseRepository<T extends BaseEntity> implements BaseRepository<T> {
 
-    private Map<String, T> entities = new HashMap<>();
+    protected Map<String, T> entities = new HashMap<>();
 
     public Optional<T> findById(String id) {
         return Optional.ofNullable(entities.get(id));
@@ -21,5 +21,9 @@ public class InMemoryBaseRepository<T extends BaseEntity> implements BaseReposit
 
     public void delete(T entity) {
         this.entities.remove(entity.getId());
+    }
+
+    public void clear() {
+        this.entities.clear();
     }
 }
