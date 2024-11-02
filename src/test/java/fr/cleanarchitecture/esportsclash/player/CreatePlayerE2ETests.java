@@ -1,8 +1,8 @@
 package fr.cleanarchitecture.esportsclash.player;
 
 import fr.cleanarchitecture.esportsclash.PostgreSQLTestConfiguration;
-import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.application.ports.PlayerRepository;
+import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.CreatePlayerDto;
 import fr.cleanarchitecture.esportsclash.player.infrastructure.spring.PlayerConfiguration;
 import org.junit.Assert;
@@ -35,7 +35,7 @@ public class CreatePlayerE2ETests {
 
     @Test
     public void shouldCreatePlayer() throws Exception {
-        var dto = new CreatePlayerDto("fr/cleanarchitecture/esportsclash/player");
+        var dto = new CreatePlayerDto("player");
 
         var result = mockMvc
                 .perform(MockMvcRequestBuilders.post("/players")

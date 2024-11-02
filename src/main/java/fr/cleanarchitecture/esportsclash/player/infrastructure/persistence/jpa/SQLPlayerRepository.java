@@ -34,4 +34,9 @@ public class SQLPlayerRepository implements PlayerRepository {
         );
         dataAccessor.delete(SQLPlayer);
     }
+
+    @Override
+    public void clear() {
+        dataAccessor.deleteAll();
+    }
 }

@@ -9,4 +9,6 @@ public interface BaseRepository<T> {
     void save(T entity);
 
     void delete(T entity);
+
+    void clear();
 }

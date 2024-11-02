@@ -1,11 +1,11 @@
 package fr.cleanarchitecture.esportsclash.player.infrastructure.spring;
 
 import an.awesome.pipelinr.Pipeline;
-import fr.cleanarchitecture.esportsclash.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.CreatePlayerCommand;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.DeletePlayerCommand;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.GetPlayerByIdCommand;
 import fr.cleanarchitecture.esportsclash.player.application.usecases.RenamePlayerCommand;
+import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.PlayerViewModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package fr.cleanarchitecture.esportsclash.player.infrastructure.spring;
+package fr.cleanarchitecture.esportsclash.core.infrastructure.spring;
 
 import fr.cleanarchitecture.esportsclash.core.domain.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -12,5 +12,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> handleNotFoundException(NotFoundException e) {
         return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().build();
     }
 }
