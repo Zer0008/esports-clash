@@ -6,6 +6,7 @@ import fr.cleanarchitecture.esportsclash.auth.application.usecases.RegisterUserC
 import fr.cleanarchitecture.esportsclash.auth.application.usecases.RegisterUserCommandHandler;
 import fr.cleanarchitecture.esportsclash.auth.domain.model.User;
 import fr.cleanarchitecture.esportsclash.auth.infrastructure.persistence.inmemory.InMemoryUserRepository;
+import fr.cleanarchitecture.esportsclash.core.domain.exceptions.BadRequestException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ public class RegisterCommandHandlerTest {
 
         Assert.assertThrows(
                 "Email address already in use",
-                IllegalArgumentException.class,
+                BadRequestException.class,
                 () -> commandHandler.handle(command)
         );
     }

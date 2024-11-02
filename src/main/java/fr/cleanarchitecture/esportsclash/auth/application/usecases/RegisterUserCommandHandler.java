@@ -4,6 +4,7 @@ import an.awesome.pipelinr.Command;
 import fr.cleanarchitecture.esportsclash.auth.application.ports.UserRepository;
 import fr.cleanarchitecture.esportsclash.auth.application.services.passwordhasher.PasswordHasher;
 import fr.cleanarchitecture.esportsclash.auth.domain.model.User;
+import fr.cleanarchitecture.esportsclash.core.domain.exceptions.BadRequestException;
 import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.IdResponse;
 
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class RegisterUserCommandHandler implements Command.Handler<RegisterUserC
     public IdResponse handle(RegisterUserCommand registerUserCommand) {
         var userEmailAddressAlreadyInUse = userRepository.emailAddressAvailable(registerUserCommand.getUserEmail());
         if (!userEmailAddressAlreadyInUse) {
-            throw new IllegalArgumentException("Email address already in use");
+            throw new BadRequestException("Email address already in use");
         }
 
         var user = new User(
