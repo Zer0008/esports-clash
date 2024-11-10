@@ -2,7 +2,7 @@ package fr.cleanarchitecture.esportsclash.auth.application.services.passwordhash
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class BcryptPasswordHasher implements PasswordHasher{
+public class BcryptPasswordHasher implements PasswordHasher {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
