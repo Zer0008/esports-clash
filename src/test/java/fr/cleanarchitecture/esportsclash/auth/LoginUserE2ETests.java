@@ -1,43 +1,22 @@
 package fr.cleanarchitecture.esportsclash.auth;
 
-import fr.cleanarchitecture.esportsclash.PostgreSQLTestConfiguration;
-import fr.cleanarchitecture.esportsclash.auth.application.ports.UserRepository;
+import fr.cleanarchitecture.esportsclash.IntegrationTests;
 import fr.cleanarchitecture.esportsclash.auth.application.services.passwordhasher.PasswordHasher;
 import fr.cleanarchitecture.esportsclash.auth.domain.model.User;
 import fr.cleanarchitecture.esportsclash.auth.domain.viewmodel.LoggedInUserViewModel;
-import fr.cleanarchitecture.esportsclash.auth.infrastructure.spring.AuthAdapterConfiguration;
-import fr.cleanarchitecture.esportsclash.auth.infrastructure.spring.AuthServicesConfiguration;
 import fr.cleanarchitecture.esportsclash.auth.infrastructure.spring.LoginUserDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-@Import({PostgreSQLTestConfiguration.class, AuthAdapterConfiguration.class, AuthServicesConfiguration.class})
-public class LoginUserE2ETests {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private UserRepository userRepository;
-
+public class LoginUserE2ETests extends IntegrationTests {
     @Autowired
     private PasswordHasher passwordHasher;
 
