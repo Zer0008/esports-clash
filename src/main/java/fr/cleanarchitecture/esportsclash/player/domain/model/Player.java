@@ -1,7 +1,8 @@
 package fr.cleanarchitecture.esportsclash.player.domain.model;
 
-public class Player {
-    private String id;
+import fr.cleanarchitecture.esportsclash.core.domain.model.BaseEntity;
+
+public class Player extends BaseEntity {
     private String name;
 
     public Player(String id, String name) {

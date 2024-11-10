@@ -14,7 +14,7 @@ public class RenamePlayerTests {
     public void shouldRenamePlayer() {
         var playerRepository = new InMemoryPlayerRepository();
         var player = new Player("123", "old name");
-        playerRepository.savePlayer(player);
+        playerRepository.save(player);
 
         var renamePlayerCommand = new RenamePlayerCommand(player.getId(), "new name");
         var renamePlayerCommandHandler = new RenamePlayerCommandHandler(playerRepository);

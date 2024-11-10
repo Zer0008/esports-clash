@@ -17,7 +17,7 @@ public class DeletePlayerCommandHandler implements Command.Handler<DeletePlayerC
         var playerToDelete = playerRepository.findById(deletePlayerCommand.getId()).orElseThrow(
                 () -> new NotFoundException("Player not found")
         );
-        playerRepository.deletePlayer(playerToDelete);
+        playerRepository.delete(playerToDelete);
         return null;
     }
 }
