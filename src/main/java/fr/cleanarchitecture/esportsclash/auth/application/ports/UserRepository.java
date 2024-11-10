@@ -6,6 +6,5 @@ import fr.cleanarchitecture.esportsclash.core.domain.application.ports.BaseRepos
 import java.util.Optional;
 
 public interface UserRepository extends BaseRepository<User> {
-        boolean emailAddressAvailable(String userEmailAddress);
         Optional<User> findByEmailAddress(String emailAddress);
 }

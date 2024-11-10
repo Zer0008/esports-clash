@@ -5,6 +5,7 @@ import fr.cleanarchitecture.esportsclash.auth.application.usecases.LoginUserComm
 import fr.cleanarchitecture.esportsclash.auth.application.usecases.RegisterUserCommand;
 import fr.cleanarchitecture.esportsclash.auth.domain.viewmodel.LoggedInUserViewModel;
 import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.IdResponse;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Transactional
 public class AuthController {
 
     private final Pipeline pipeline;

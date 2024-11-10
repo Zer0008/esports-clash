@@ -21,8 +21,8 @@ public class RegisterUserCommandHandler implements Command.Handler<RegisterUserC
 
     @Override
     public IdResponse handle(RegisterUserCommand registerUserCommand) {
-        var userEmailAddressAlreadyInUse = userRepository.emailAddressAvailable(registerUserCommand.getUserEmail());
-        if (!userEmailAddressAlreadyInUse) {
+        var userEmailAddressAlreadyInUse = userRepository.findByEmailAddress(registerUserCommand.getUserEmail());
+        if (userEmailAddressAlreadyInUse.isPresent()) {
             throw new BadRequestException("Email address already in use");
         }
 

@@ -32,7 +32,10 @@ public class IntegrationTests {
     protected JwtService jwtService;
 
     protected String createJwt() {
-        var user = new User("123", "contact@cleanarchitecture.fr", "mot2passe");
+        var user = userRepository.findByEmailAddress("contact@cleanarchitecture.fr").orElse(null);
+        if (user == null) {
+            user = new User("123", "contact@cleanarchitecture.fr", "mot2passe");
+        }
         userRepository.save(user);
         return "Bearer " + jwtService.generateToken(user);
     }
