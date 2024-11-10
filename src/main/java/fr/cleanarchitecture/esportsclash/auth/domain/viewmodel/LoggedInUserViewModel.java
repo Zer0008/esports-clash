@@ -2,9 +2,11 @@ package fr.cleanarchitecture.esportsclash.auth.domain.viewmodel;
 
 public class LoggedInUserViewModel {
 
-    private final String id;
-    private final String email;
-    private final String token;
+    private String id;
+    private String email;
+    private String token;
+
+    public LoggedInUserViewModel() {}
 
     public LoggedInUserViewModel(String id, String email, String token) {
         this.id = id;
