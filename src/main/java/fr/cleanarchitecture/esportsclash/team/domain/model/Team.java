@@ -7,12 +7,11 @@ import java.util.UUID;
 
 public class Team extends BaseEntity {
 
-    private final String teamId;
     private final String teamName;
     private final Set<TeamMember> members;
 
     public Team(String teamId, String teamName, Set<TeamMember> members) {
-        this.teamId = teamId;
+        this.id = teamId;
         this.teamName = teamName;
         this.members = members;
     }
@@ -53,7 +52,7 @@ public class Team extends BaseEntity {
     }
 
     public String getTeamId() {
-        return teamId;
+        return id;
     }
 
     public String getTeamName() {

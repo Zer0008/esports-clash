@@ -34,7 +34,7 @@ public class PlayerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> chamgeNamePlayer(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deletePlayer(@PathVariable("id") String id) {
         this.pipeline.send(new DeletePlayerCommand(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

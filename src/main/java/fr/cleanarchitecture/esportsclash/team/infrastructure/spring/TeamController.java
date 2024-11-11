@@ -3,12 +3,10 @@ package fr.cleanarchitecture.esportsclash.team.infrastructure.spring;
 import an.awesome.pipelinr.Pipeline;
 import fr.cleanarchitecture.esportsclash.player.domain.viewmodel.IdResponse;
 import fr.cleanarchitecture.esportsclash.team.application.usecases.CreateTeamCommand;
+import fr.cleanarchitecture.esportsclash.team.application.usecases.DeleteTeamCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("teams")
@@ -24,5 +22,11 @@ public class TeamController {
     public ResponseEntity<IdResponse> createTeam(@RequestBody CreateTeamDto createTeamDto) {
         var result = this.pipeline.send(new CreateTeamCommand(createTeamDto.getName()));
         return new ResponseEntity<>(new IdResponse(result.getId()), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{teamId}")
+    public ResponseEntity<Void> deleteTeam(@PathVariable("teamId") String teamId) {
+        this.pipeline.send(new DeleteTeamCommand(teamId));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

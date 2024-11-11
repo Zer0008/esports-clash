@@ -2,6 +2,7 @@ package fr.cleanarchitecture.esportsclash.team.infrastructure.spring;
 
 import fr.cleanarchitecture.esportsclash.team.application.ports.TeamRepository;
 import fr.cleanarchitecture.esportsclash.team.application.usecases.CreateTeamCommandHandler;
+import fr.cleanarchitecture.esportsclash.team.application.usecases.DeleteTeamCommandHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,5 +11,10 @@ public class TeamCommandHandlerConfiguration {
     @Bean
     public CreateTeamCommandHandler createTeamCommandHandler(TeamRepository teamRepository) {
         return new CreateTeamCommandHandler(teamRepository);
+    }
+
+    @Bean
+    public DeleteTeamCommandHandler deleteTeamCommandHandler(TeamRepository teamRepository) {
+        return new DeleteTeamCommandHandler(teamRepository);
     }
 }
