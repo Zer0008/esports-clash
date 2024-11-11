@@ -13,8 +13,4 @@ public class CreatePlayerCommand implements Command<IdResponse> {
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

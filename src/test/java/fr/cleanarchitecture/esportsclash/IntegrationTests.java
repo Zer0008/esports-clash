@@ -19,7 +19,8 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
         {PostgreSQLTestConfiguration.class,
                 PlayerConfiguration.class,
                 AuthServicesConfiguration.class,
-                AuthAdapterConfiguration.class}
+                AuthAdapterConfiguration.class
+        }
 )
 public class IntegrationTests {
     @Autowired
