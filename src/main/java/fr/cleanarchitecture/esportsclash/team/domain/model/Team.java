@@ -38,7 +38,7 @@ public class Team extends BaseEntity {
 
     public void removeMember(String playerId) {
         if (this.members.stream().noneMatch(teamMember -> teamMember.playerId.equals(playerId))) {
-            throw new IllegalArgumentException("Player " + playerId + " is not in the team");
+            throw new BadRequestException("Player " + playerId + " is not in the team");
         }
         this.members.removeIf(teamMember -> teamMember.playerId.equals(playerId));
     }
