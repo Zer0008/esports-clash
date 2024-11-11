@@ -1,5 +1,6 @@
 package fr.cleanarchitecture.esportsclash.team.domain.model;
 
+import fr.cleanarchitecture.esportsclash.core.domain.exceptions.BadRequestException;
 import fr.cleanarchitecture.esportsclash.core.domain.model.BaseEntity;
 
 import java.util.Set;
@@ -21,11 +22,11 @@ public class Team extends BaseEntity {
         var roleAlreadyInUseInTheTeam = this.members.stream().anyMatch(teamMember -> teamMember.role.equals(role));
 
         if (playerAlreadyInTheTeam) {
-            throw new IllegalArgumentException("Player " + playerId + " already in the team");
+            throw new BadRequestException("Player " + playerId + " is already in the team");
         }
 
         if (roleAlreadyInUseInTheTeam) {
-            throw new IllegalArgumentException("Role " + role + " already taken in the team");
+            throw new BadRequestException("Role " + role + " is already taken in the team");
         }
 
         var member = new TeamMember(
@@ -63,7 +64,7 @@ public class Team extends BaseEntity {
         return members;
     }
 
-    static class TeamMember {
+    public static class TeamMember {
         private final String id;
         private final String playerId;
         private final Role role;

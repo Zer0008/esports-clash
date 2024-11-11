@@ -29,7 +29,7 @@ public class DeleteTeamTests {
         deleteTeamCommandHandler.handle(deleteTeamCommand);
 
         var team = teamRepository.findById(existingTeam.getId());
-        Assertions.assertTrue(team.isEmpty());
+        Assertions.assertFalse(team.isPresent());
     }
 
     @Test

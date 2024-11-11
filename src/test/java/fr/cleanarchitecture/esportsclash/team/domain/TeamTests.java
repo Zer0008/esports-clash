@@ -31,7 +31,7 @@ public class TeamTests {
                     () -> team.addMember("playerId", Role.BOTTOM)
             );
 
-            Assertions.assertEquals(exception.getMessage(), "Player playerId already in the team");
+            Assertions.assertEquals(exception.getMessage(), "Player playerId is already in the team");
         }
 
         @Test
@@ -43,7 +43,7 @@ public class TeamTests {
                     () -> team.addMember("playerId2", Role.TOP)
             );
 
-            Assertions.assertEquals(exception.getMessage(), "Role TOP already taken in the team");
+            Assertions.assertEquals(exception.getMessage(), "Role TOP is already taken in the team");
         }
     }
 
