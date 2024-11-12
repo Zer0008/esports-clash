@@ -6,7 +6,7 @@ import fr.cleanarchitecture.esportsclash.player.domain.model.Player;
 import fr.cleanarchitecture.esportsclash.team.application.ports.TeamRepository;
 import fr.cleanarchitecture.esportsclash.team.domain.model.Role;
 import fr.cleanarchitecture.esportsclash.team.domain.model.Team;
-import fr.cleanarchitecture.esportsclash.team.infrastructure.spring.AddPlayerToTeamDto;
+import fr.cleanarchitecture.esportsclash.team.infrastructure.spring.RemovePlayerFromTeamDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +20,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.HashSet;
 
 @RunWith(SpringRunner.class)
-public class AddPlayerToTeamE2ETests extends IntegrationTests {
+public class RemovePlayerFromTeamE2ETests extends IntegrationTests {
 
     @Autowired
-    private TeamRepository teamRepository;
-    @Autowired
     private PlayerRepository playerRepository;
+    @Autowired
+    private TeamRepository teamRepository;
 
     private final Team existingTeam = new Team("teamId", "teamName", new HashSet<>());
     private final Player existingPlayer = new Player("playerId", "playerName");
@@ -39,53 +39,27 @@ public class AddPlayerToTeamE2ETests extends IntegrationTests {
     }
 
     @Test
-    public void shouldAddPlayerToTeam() throws Exception {
-        var dto = new AddPlayerToTeamDto("teamId", "playerId", Role.TOP);
+    public void shouldRemovePlayerFromTeam() throws Exception {
+        existingTeam.addMember(existingPlayer.getId(), Role.TOP);
+        var dto = new RemovePlayerFromTeamDto("teamId", "playerId");
 
         mockMvc
-                .perform(MockMvcRequestBuilders.post("/teams/add-player-to-team")
+                .perform(MockMvcRequestBuilders.delete("/teams/remove-player-from-team")
                         .header("Authorization", createJwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         var team = teamRepository.findById(dto.getTeamId()).get();
-        Assert.assertTrue(team.hasMember(dto.getPlayerId(), dto.getRole()));
-    }
-
-    @Test
-    public void whenPlayerIsAlreadyInTeam_shouldFail() throws Exception {
-        existingTeam.addMember(existingPlayer.getId(), Role.TOP);
-        var dto = new AddPlayerToTeamDto("teamId", "playerId", Role.TOP);
-
-        mockMvc
-                .perform(MockMvcRequestBuilders.post("/teams/add-player-to-team")
-                        .header("Authorization", createJwt())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-    }
-
-    @Test
-    public void whenRolePlayerIsAlreadyTakenInTheTeam_shouldFail() throws Exception {
-        existingTeam.addMember(existingPlayer.getId(), Role.TOP);
-        playerRepository.save(new Player("playerId2", "playerName2"));
-        var dto = new AddPlayerToTeamDto("teamId", "playerId2", Role.TOP);
-
-        mockMvc
-                .perform(MockMvcRequestBuilders.post("/teams/add-player-to-team")
-                        .header("Authorization", createJwt())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+        Assert.assertFalse(team.hasMember(dto.getPlayerId(), Role.TOP));
     }
 
     @Test
     public void whenTeamDoesNotExist_shouldFail() throws Exception {
-        var dto = new AddPlayerToTeamDto("teamId2", "playerId", Role.TOP);
+        var dto = new RemovePlayerFromTeamDto("teamId2", "playerId");
 
         mockMvc
-                .perform(MockMvcRequestBuilders.post("/teams/add-player-to-team")
+                .perform(MockMvcRequestBuilders.delete("/teams/remove-player-from-team")
                         .header("Authorization", createJwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
@@ -94,13 +68,27 @@ public class AddPlayerToTeamE2ETests extends IntegrationTests {
 
     @Test
     public void whenPlayerDoesNotExist_shouldFail() throws Exception {
-        var dto = new AddPlayerToTeamDto("teamId", "playerId2", Role.TOP);
+        var dto = new RemovePlayerFromTeamDto("teamId", "playerId2");
 
         mockMvc
-                .perform(MockMvcRequestBuilders.post("/teams/add-player-to-team")
+                .perform(MockMvcRequestBuilders.delete("/teams/remove-player-from-team")
                         .header("Authorization", createJwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void whenPlayerNotInTeam_shouldFail() throws Exception {
+        var player = new Player("playerId2", "playerName");
+        existingTeam.addMember(player.getId(), Role.TOP);
+        var dto = new RemovePlayerFromTeamDto("teamId", "playerId");
+
+        mockMvc
+                .perform(MockMvcRequestBuilders.delete("/teams/remove-player-from-team")
+                        .header("Authorization", createJwt())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

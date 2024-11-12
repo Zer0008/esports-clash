@@ -19,11 +19,11 @@ import java.util.HashSet;
 
 public class RemovePlayerFromTeamTests {
 
-    private PlayerRepository playerRepository = new InMemoryPlayerRepository();
-    private TeamRepository teamRepository = new InMemoryTeamRepository();
+    private final PlayerRepository playerRepository = new InMemoryPlayerRepository();
+    private final TeamRepository teamRepository = new InMemoryTeamRepository();
 
-    private Team team = new Team("team123", "TeamName", new HashSet<>());
-    private Player player = new Player("player123", "playerName");
+    private final Team team = new Team("team123", "TeamName", new HashSet<>());
+    private final Player player = new Player("player123", "playerName");
 
     private RemovePlayerFromTeamCommandHandler createCommandHandler() {
         return new RemovePlayerFromTeamCommandHandler(teamRepository, playerRepository);
